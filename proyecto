@@ -1,0 +1,107 @@
+suma 
+import java.util.Scanner;
+
+public class SumaNumeros {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingresa el primer número: ");
+        int num1 = sc.nextInt();
+        System.out.print("Ingresa el segundo número: ");
+        int num2 = sc.nextInt();
+        int suma = num1 + num2;
+        System.out.println("La suma es: " + suma);
+        sc.close();
+    }
+}
+
+tabla de multi
+múltiplesimport java.util.Scanner;
+
+public class TablaMultiplicar {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingresa el número para ver su tabla de multiplicar: ");
+        int numero = sc.nextInt();
+        
+        for (int i = 1; i <= 10; i++) {
+            System.out.println(numero + " x " + i + " = " + (numero * i));
+        }
+        sc.close();
+    }
+}
+
+área cirulo 
+import java.util.Scanner;
+
+public class AreaCirculo {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingresa el radio del círculo: ");
+        double radio = sc.nextDouble();
+        double area = Math.PI * Math.pow(radio, 2);
+        System.out.println("El área del círculo es: " + area);
+        sc.close();
+    }
+}
+
+mator de edad
+edadimport java.util.Scanner;
+
+public class MayorEdad {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingresa tu edad: ");
+        int edad = sc.nextInt();
+        
+        if (edad >= 18) {
+            System.out.println("Eres mayor de edad.");
+        } else {
+            System.out.println("Eres menor de edad.");
+        }
+        sc.close();
+    }
+}
+
+fizz bzz
+
+public class FizzBuzz {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 100; i++) {
+            if (i % 3 == 0 && i % 5 == 0) {
+                System.out.println("FizzBuzz");
+            } else if (i % 3 == 0) {
+                System.out.println("Fizz");
+            } else if (i % 5 == 0) {
+                System.out.println("Buzz");
+            } else {
+                System.out.println(i);
+            }
+        }
+    }
+}
+
+serie alternate
+alternate
+import java.util.Scanner;
+
+public class SerieAlternante {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingresa el número límite: ");
+        int limite = sc.nextInt();
+
+        for (int i = 1; i <= limite; i++) {
+            if (i % 2 == 0) {
+                System.out.print(-i); // Pares negativos
+            } else {
+                System.out.print(i);  // Impares positivos
+            }
+
+            if (i != limite) {
+                System.out.print(", ");
+            }
+        }
+
+        sc.close();
+    }
+}
