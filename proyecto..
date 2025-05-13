@@ -1,0 +1,261 @@
+package ui;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import proyecto.tablero;
+import proyecto.carta;
+
+public class ui extends Application {
+    private tablero juego;  
+    private Text contadorIntentos;
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    
+    public void start(Stage primaryStage) {
+        juego = new tablero(8, 8);  
+        GridPane grid = new GridPane();
+        contadorIntentos = new Text("Intentos: 0");
+
+        
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Button boton = new Button();
+                boton.setMinSize(50, 50);
+                boton.setStyle("-fx-font-size: 20;");
+
+               
+                carta carta = juego.getCarta(i, j); 
+
+                boton.setOnAction(e -> {
+                    if (!carta.estaVisible() && !carta.estaEliminada()) {
+                        
+                        carta.voltear();
+                        boton.setGraphic(new javafx.scene.image.ImageView(carta.getImagen()));
+                        juego.incrementarIntentos();
+                        contadorIntentos.setText("Intentos: " + juego.getIntentos());
+                        
+                       
+                        if (juego.juegoTerminado()) {
+                            System.out.println("¡Has ganado! El juego ha terminado.");
+                        }
+                    }
+                });
+
+                grid.add(boton, j, i);
+            }
+        }
+
+        
+        grid.add(contadorIntentos, 0, 8, 8, 1);
+
+        
+        Button reiniciarButton = new Button("Reiniciar");
+        reiniciarButton.setOnAction(e -> reiniciarJuego());
+
+        
+        grid.add(reiniciarButton, 0, 9, 8, 1);
+
+        
+        Scene scene = new Scene(grid, 400, 400);
+        primaryStage.setTitle("Juego de Memoria");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    
+    private void reiniciarJuego() {
+        System.out.println("Juego reiniciado");
+        juego = new tablero(8, 8);  
+        contadorIntentos.setText("Intentos: 0");  
+       
+    }}
+..
+
+package proyecto;
+
+public class juego {
+    private tablero tablero;
+    private int intentos;
+    private carta cartaVolteada1;
+    private carta cartaVolteada2;
+
+    public juego(int filas, int columnas) {
+        this.tablero = new tablero(filas, columnas);
+        this.intentos = 0;
+        this.cartaVolteada1 = null;
+        this.cartaVolteada2 = null;
+    }
+
+   
+    public void voltearCarta(int fila, int columna) {
+        carta carta = tablero.getCarta(fila, columna);
+
+        
+        if (cartaVolteada1 == null) {
+            carta.voltear();
+            cartaVolteada1 = carta;  
+        } else if (cartaVolteada2 == null) {
+            carta.voltear();
+            cartaVolteada2 = carta;  
+            // 
+            intentos++;
+        }
+
+      
+        if (cartaVolteada1 != null && cartaVolteada2 != null) {
+            if (verificarCoincidencia(cartaVolteada1, cartaVolteada2)) {
+                
+                cartaVolteada1.eliminar();
+                cartaVolteada2.eliminar();
+            } else {
+               
+                cartaVolteada1.voltear();
+                cartaVolteada2.voltear();
+            }
+
+           
+            cartaVolteada1 = null;
+            cartaVolteada2 = null;
+        }
+    }
+
+   
+    private boolean verificarCoincidencia(carta carta1, carta carta2) {
+        return carta1.getValor().equals(carta2.getValor());
+    }
+
+   
+    public int getIntentos() {
+        return intentos;
+    }
+
+    
+    public boolean juegoTerminado() {
+        return tablero.juegoTerminado();
+    }
+
+    
+    public void reiniciarJuego() {
+        tablero = new tablero(8, 8);  
+        intentos = 0; 
+        cartaVolteada1 = null;
+        cartaVolteada2 = null;
+    }
+}
+..
+package proyecto;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class tablero {
+    private carta[][] cartas;
+    private int filas;
+    private int columnas;
+    private int intentos;
+
+    public tablero(int filas, int columnas) {
+        this.filas = filas;
+        this.columnas = columnas;
+        this.intentos = 0;
+        this.cartas = new carta[filas][columnas];
+        inicializarTablero();
+    }
+
+    private void inicializarTablero() {
+        List<carta> listaCartas = new ArrayList<>();
+        for (int i = 1; i <= (filas * columnas) / 2; i++) {
+            String imagenUrl = "file:C:\\Javafx\\Imagen" + i + ".png";
+            listaCartas.add(new carta(String.valueOf(i), imagenUrl, "file:C:\\Javafx\\imagen2"));
+            listaCartas.add(new carta(String.valueOf(i), imagenUrl, "file:C:\\Javafx\\imagen3"));
+        }
+        Collections.shuffle(listaCartas);
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                cartas[i][j] = listaCartas.remove(0);
+            }
+        }
+    }
+
+    public carta getCarta(int fila, int columna) {
+        return cartas[fila][columna];
+    }
+
+    public int getIntentos() {
+        return intentos;
+    }
+
+    public void incrementarIntentos() {
+        intentos++;
+    }
+
+    public boolean juegoTerminado() {
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                if (!cartas[i][j].estaEliminada()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean verificarCoincidencia(carta carta1, carta carta2) {
+        return carta1.getValor().equals(carta2.getValor());
+    }
+}
+..
+package proyecto;
+
+
+import javafx.scene.image.Image;
+
+public class carta {
+    private Image imagenVisible;
+    private Image imagenOculta;
+    private boolean estaVisible;
+    private boolean estaEliminada;
+    private String valor;
+
+    public carta(String valor, String imagenVisibleUrl, String imagenOcultaUrl) {
+        this.valor = valor;
+        this.imagenVisible = new Image(imagenVisibleUrl);
+        this.imagenOculta = new Image(imagenOcultaUrl);
+        this.estaVisible = false;
+        this.estaEliminada = false;
+    }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public Image getImagen() {
+        return estaVisible && !estaEliminada ? imagenVisible : imagenOculta;
+    }
+
+    public boolean estaVisible() {
+        return estaVisible;
+    }
+
+    public boolean estaEliminada() {
+        return estaEliminada;
+    }
+
+    public void voltear() {
+        this.estaVisible = !this.estaVisible;
+    }
+
+    public void eliminar() {
+        this.estaEliminada = true;
+        this.estaVisible = false;
+    }
+}
+
