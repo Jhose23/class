@@ -1,3 +1,4 @@
+Clase carta.
 package MemoryGames;
 public class Carta {
     private String letra;
@@ -29,7 +30,7 @@ public class Carta {
         return visible ? letra : "X";
     }
 }
-....
+Clase JuegoMemoria
 package MemoryGames;
 import java.util.Scanner;
 
@@ -98,7 +99,7 @@ public class JuegoMemoria {
         }
     }
 }
-...
+Clase Tablero
 package MemoryGames;
 import java.util.*;
 
@@ -179,7 +180,7 @@ public class Tablero {
         return true;
     }
 }
-....
+Clase Main:
 package MemoryGames;
 public class Main {
     public static void main(String[] args) {
