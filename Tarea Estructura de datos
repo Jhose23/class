@@ -1,0 +1,116 @@
+Lista de numeros para media
+import java.util.Scanner;
+
+public class EstadisticasNumeros {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        double[] numeros = new double[10];
+        double suma = 0;
+
+        int mayores = 0;
+        int iguales = 0;
+        int menores = 0;
+
+        
+        for (int i = 0; i < 10; i++) {
+            System.out.print("Ingrese el número " + (i + 1) + ": ");
+            numeros[i] = sc.nextDouble();
+            suma += numeros[i];
+
+            if (numeros[i] > 10.5) {
+                mayores++;
+            } else if (numeros[i] == 10.5) {
+                iguales++;
+            } else {
+                menores++;
+            }
+        }
+
+        
+        double media = suma / 10;
+
+        // Mostrar resultados
+        System.out.println("\nMedia: " + media);
+        System.out.println("Mayores que 10.5: " + mayores);
+        System.out.println("Iguales a 10.5: " + iguales);
+        System.out.println("Menores que 10.5: " + menores);
+
+        sc.close();
+    }
+}
+
+-------------------------------------------------------------------------------------------------------
+
+2.
+import java.util.Scanner;
+
+public class Fibonacci {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Ingrese la cantidad de términos: ");
+        int n = sc.nextInt();
+
+        int a = 0, b = 1;
+
+        System.out.println("Serie de Fibonacci:");
+
+        if (n >= 1) {
+            System.out.print(a);
+        }
+        if (n >= 2) {
+            System.out.print(", " + b);
+        }
+
+        for (int i = 3; i <= n; i++) {
+            int c = a + b;
+            System.out.print(", " + c);
+            a = b;
+            b = c;
+        }
+
+        sc.close();
+    }
+}
+
+--------------------------------------------------
+3. import java.util.Scanner;
+
+public class VectorNumeros {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int[] numeros = new int[10];
+
+        int menores15 = 0;
+        int mayores50 = 0;
+        int entre25y50 = 0;
+
+        // Llenar el vector
+        for (int i = 0; i < 10; i++) {
+            System.out.print("Ingrese el número " + (i + 1) + ": ");
+            numeros[i] = sc.nextInt();
+
+            if (numeros[i] < 15) {
+                menores15++;
+            }
+
+            if (numeros[i] > 50) {
+                mayores50++;
+            }
+
+            if (numeros[i] >= 25 && numeros[i] <= 50) {
+                entre25y50++;
+            }
+        }
+
+        // Mostrar resultados
+        System.out.println("\nResultados:");
+        System.out.println("Menores que 15: " + menores15);
+        System.out.println("Mayores que 50: " + mayores50);
+        System.out.println("Entre 25 y 50: " + entre25y50);
+
+        sc.close();
+    }
+}
