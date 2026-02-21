@@ -1,0 +1,44 @@
+#Ejercicios clase 
+import java.util.Scanner;
+
+public class Iniciales {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        
+        System.out.print("Ingresa tu nombre completo: ");
+        String nombreCompleto = scanner.nextLine().trim();
+
+        
+        System.out.print("Ingresa tus apellidos completos: ");
+        String apellidoCompleto = scanner.nextLine().trim();
+
+        
+        String[] nombres = nombreCompleto.split("\\s+"); 
+        String[] apellidos = apellidoCompleto.split("\\s+"); 
+        
+        String correo1 = nombres[0].toLowerCase() + "." + apellidos[0].toLowerCase() + ".edu.co";
+
+        
+        String inicialPrimerNombre = nombres[0].substring(0, 1).toLowerCase();
+        String segundoNombre = (nombres.length > 1) ? nombres[1].toLowerCase() : "";
+        String inicialSegundoApellido = (apellidos.length > 1) ? apellidos[1].substring(0,1).toLowerCase() : "";
+        String correo2 = inicialPrimerNombre + segundoNombre + apellidos[0].toLowerCase() + inicialSegundoApellido + "@usc.edu.co";
+
+       
+        String inicialSegundoNombre = (nombres.length > 1) ? nombres[1].substring(0,1).toLowerCase() : "";
+        String inicialPrimerApellido = apellidos[0].substring(0,1).toLowerCase();
+        String ultimoApellido = apellidos[apellidos.length - 1].toLowerCase();
+        String correo3 = inicialPrimerNombre + inicialSegundoNombre + inicialPrimerApellido + ultimoApellido + "@usc.edu.co";
+
+        
+        System.out.println("\nOpciones de correo electrónico:");
+        System.out.println("1. " + correo1);
+        System.out.println("2. " + correo2);
+        System.out.println("3. " + correo3);
+
+        scanner.close();
+    }
+}
+--------------------------------------------------------------------------------------------------
+
