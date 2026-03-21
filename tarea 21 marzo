@@ -1,0 +1,152 @@
+-----------------votacion-----------------------
+import java.util.Scanner;
+
+public class Votacion {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int voto;
+        int a = 0, b = 0, c = 0, d = 0, blanco = 0;
+        int total = 0;
+
+        do {
+            System.out.println("\n--- SISTEMA DE VOTACIÓN ---");
+            System.out.println("1. Candidato A");
+            System.out.println("2. Candidato B");
+            System.out.println("3. Candidato C");
+            System.out.println("4. Candidato D");
+            System.out.println("5. Voto en blanco");
+            System.out.println("0. Terminar votación");
+            System.out.print("Ingrese su voto: ");
+            
+            voto = sc.nextInt();
+
+            switch (voto) {
+                case 1:
+                    a++;
+                    total++;
+                    break;
+                case 2:
+                    b++;
+                    total++;
+                    break;
+                case 3:
+                    c++;
+                    total++;
+                    break;
+                case 4:
+                    d++;
+                    total++;
+                    break;
+                case 5:
+                    blanco++;
+                    total++;
+                    break;
+                case 0:
+                    System.out.println("Votación finalizada.");
+                    break;
+                default:
+                    System.out.println("Opción inválida.");
+            }
+
+        } while (voto != 0);
+
+        
+        if (total == 0) {
+            System.out.println("No hubo votos.");
+            return;
+        }
+
+        
+        System.out.println("\n--- RESULTADOS ---");
+        System.out.println("Candidato A: " + a + " votos (" + (a * 100.0 / total) + "%)");
+        System.out.println("Candidato B: " + b + " votos (" + (b * 100.0 / total) + "%)");
+        System.out.println("Candidato C: " + c + " votos (" + (c * 100.0 / total) + "%)");
+        System.out.println("Candidato D: " + d + " votos (" + (d * 100.0 / total) + "%)");
+        System.out.println("Votos en blanco: " + blanco + " (" + (blanco * 100.0 / total) + "%)");
+
+        
+        int max = a;
+        String ganador = "Candidato A";
+
+        if (b > max) {
+            max = b;
+            ganador = "Candidato B";
+        }
+        if (c > max) {
+            max = c;
+            ganador = "Candidato C";
+        }
+        if (d > max) {
+            max = d;
+            ganador = "Candidato D";
+        }
+
+        System.out.println("\nGanador: " + ganador + " con " + max + " votos.");
+    }
+}
+----------------------------solicite una contraseña----------------------------------------------
+import java.util.Scanner;
+
+public class ValidarContrasena {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String contrasena;
+
+        // Mostrar requisitos
+        System.out.println("=== REQUISITOS DE LA CONTRASEÑA ===");
+        System.out.println("- Mínimo 8 caracteres");
+        System.out.println("- Debe contener al menos 1 número");
+        System.out.println("- Debe contener al menos 1 letra");
+        System.out.println("===================================\n");
+
+        while (true) {
+            System.out.print("Ingrese una contraseña: ");
+            contrasena = sc.nextLine();
+
+            if (esValida(contrasena)) {
+                System.out.println("Contraseña válida ✅");
+                break;
+            } else {
+                System.out.println("Contraseña inválida ❌. Intente de nuevo.\n");
+            }
+        }
+
+        sc.close();
+    }
+
+    public static boolean esValida(String c) {
+        if (c.length() < 8) {
+            return false;
+        }
+
+        boolean tieneNumero = false;
+        boolean tieneLetra = false;
+
+        for (int i = 0; i < c.length(); i++) {
+            char ch = c.charAt(i);
+
+            if (Character.isDigit(ch)) {
+                tieneNumero = true;
+            }
+            if (Character.isLetter(ch)) {
+                tieneLetra = true;
+            }
+        }
+
+        return tieneNumero && tieneLetra;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
