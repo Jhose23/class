@@ -1,0 +1,94 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Inventario {
+
+    public static void main(String[] args) {
+
+        
+        HashMap<String, Integer> inventario = new HashMap<>();
+
+        
+        inventario.put("Manzanas",   50);
+        inventario.put("Leche",      30);
+        inventario.put("Pan",        20);
+        inventario.put("Arroz",      100);
+        inventario.put("Café",       15);
+
+        Scanner scanner = new Scanner(System.in);
+        boolean continuar = true;
+
+        while (continuar) {
+            
+            System.out.println("\n╔══════════════════════════════╗");
+            System.out.println("║      INVENTARIO DE TIENDA    ║");
+            System.out.println("╠══════════════════════════════╣");
+            System.out.printf("║ %-18s %8s ║%n", "Producto", "Cantidad");
+            System.out.println("╠══════════════════════════════╣");
+
+            for (Map.Entry<String, Integer> entrada : inventario.entrySet()) {
+                System.out.printf("║ %-18s %8d ║%n",
+                        entrada.getKey(), entrada.getValue());
+            }
+            System.out.println("╚══════════════════════════════╝");
+
+            
+            System.out.print("\nIngrese el nombre del producto (o 'salir' para terminar): ");
+            String producto = scanner.nextLine().trim();
+
+            if (producto.equalsIgnoreCase("salir")) {
+                continuar = false;
+                System.out.println("\n¡Gracias por usar el sistema de inventario!");
+                break;
+            }
+
+            
+            String claveProd = null;
+            for (String clave : inventario.keySet()) {
+                if (clave.equalsIgnoreCase(producto)) {
+                    claveProd = clave;
+                    break;
+                }
+            }
+
+            if (claveProd == null) {
+                System.out.println("el producto \"" + producto + "\" no existe en el inventario.");
+                continue;
+            }
+
+            System.out.print("Ingrese la cantidad que desea comprar: ");
+            int cantidadCompra;
+
+            try {
+                cantidadCompra = Integer.parseInt(scanner.nextLine().trim());
+                if (cantidadCompra <= 0) {
+                    System.out.println("La cantidad debe ser un número positivo.");
+                    continue;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println(" Por favor ingrese un número válido.");
+                continue;
+            }
+
+            int stockActual = inventario.get(claveProd);
+
+            
+            if (cantidadCompra > stockActual) {
+                System.out.println(" Stock insuficiente para \"" + claveProd + "\".");
+                System.out.println("   Disponible: " + stockActual
+                        + " | Solicitado: " + cantidadCompra);
+
+            } else {
+                
+                inventario.put(claveProd, stockActual - cantidadCompra);
+                System.out.println("Compra realizada con éxito.");
+                System.out.println("   " + cantidadCompra + " unidad(es) de \""
+                        + claveProd + "\" compradas.");
+                System.out.println("   Stock restante: " + inventario.get(claveProd));
+            }
+        }
+
+        scanner.close();
+    }
+}
